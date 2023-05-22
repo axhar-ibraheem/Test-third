@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import CandyContext from "./Store/candyContext";
+import CandyContextProvider from "./Store/candyContextProvider";
+import CandyForm from "./components/CandyForm";
+import CandyItems from "./components/CandyItems";
+import Cart from "./components/Cart";
+import React, { useState, useEffect, useContext } from "react";
 function App() {
+  const [candyItems, setCandyItems] = useState([]);
+  const onAddItemHandler = (item) => {
+    setCandyItems([item, ...candyItems]);
+  };
+  const ctx = useContext(CandyContext);
+  console.log(ctx.items);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CandyContextProvider>
+      <CandyForm onAddCandy={onAddItemHandler}></CandyForm>
+      <CandyItems candies={candyItems}></CandyItems>
+      {<Cart></Cart>}
+    </CandyContextProvider>
   );
 }
 
